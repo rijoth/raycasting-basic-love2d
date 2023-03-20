@@ -66,6 +66,9 @@ local function rayCasting()
     -- pythogoras theorem
     local distance = math.sqrt(math.pow(data.player.x - ray.x, 2) + math.pow(data.player.y - ray.y, 2))
 
+    -- fish eye effect fix
+    distance = distance * math.cos(degreeToRadians(rayAngle - data.player.angle))
+
     -- wall height
     local wallHeight = math.floor(data.screen.halfH/distance)
 
