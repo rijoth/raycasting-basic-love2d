@@ -36,6 +36,8 @@ function love.load()
         {1,0,0,0,0,0,0,0,0,1},
         {1,1,1,1,1,1,1,1,1,1},
   }
+ --
+ data.prevMouseX = love.mouse.getX()
 end
 
 -- function to convert degree to radians
@@ -88,6 +90,7 @@ end
 
 -- update function
 function love.update(dt)
+  -- forward movement
   if love.keyboard.isDown("w") then
     local playerCos = math.cos(degreeToRadians(data.player.angle)) * data.player.speed.movement
     local playerSin = math.sin(degreeToRadians(data.player.angle)) * data.player.speed.movement
@@ -111,11 +114,14 @@ function love.update(dt)
       data.player.y = newY
     end
   end
-  if love.keyboard.isDown("a")  then
+  -- left and right movement
+  local mouseX = love.mouse.getX()
+  if love.keyboard.isDown("a") or mouseX < data.prevMouseX then
     data.player.angle = data.player.angle - data.player.speed.rotation * dt
-  elseif love.keyboard.isDown("d")  then
+  elseif love.keyboard.isDown("d") or mouseX > data.prevMouseX then
     data.player.angle = data.player.angle + data.player.speed.rotation * dt
   end
+  data.prevMouseX = mouseX
 end
 
 -- draw function
